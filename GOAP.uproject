@@ -9,9 +9,5 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}
-	],
-	"TargetPlatforms": [
-		"AllDesktop",
-		"WindowsNoEditor"
 	]
 }
