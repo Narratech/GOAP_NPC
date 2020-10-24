@@ -17,8 +17,10 @@ void AGOAPController::BeginPlay()
 	// Loads actions.
 	for (auto i = 0; i < actions.Num(); ++i)
 	{
-		FString aux = actions[i].GetDefaultObject()->GetName();
-		auxActions.Push(actions[i].GetDefaultObject());
+		if (actions[i] != NULL) {
+			FString aux = actions[i].GetDefaultObject()->GetName();
+			auxActions.Push(actions[i].GetDefaultObject());
+		}
 	}
 
 	// Loads Current World.
