@@ -7,6 +7,8 @@
 		-	Jose Manuel Sierra Ramos.
 
 	Published on 2020.
+
+	Updated by Daniel Gil Aguilar on 2022
  */
 #pragma once
 

@@ -7,6 +7,8 @@
 		-	Jose Manuel Sierra Ramos.
 
 	Published on 2020.
+
+	Updated by Daniel Gil Aguilar on 2022
  */
 #pragma once
 
@@ -35,6 +37,9 @@ private:
 	TArray<GOAPNode> closedList;
 
 	int maxDepth;
+
+	GOAPWorldState* lastWorld = nullptr;
+	TArray<UGOAPAction*> lastPlan;
 
 public:
 

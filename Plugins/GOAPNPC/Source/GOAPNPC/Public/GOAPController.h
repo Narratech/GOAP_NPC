@@ -7,6 +7,8 @@
 		-	Jose Manuel Sierra Ramos.
 
 	Published on 2020.
+
+	Updated by Daniel Gil Aguilar on 2022
  */
 #pragma once
 
@@ -14,6 +16,7 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "GOAPController.generated.h"
+
 
  /**
  * AIController containg the planner, states of the current and desired world, and the list of available actions the AI can perform.
@@ -38,9 +41,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GOAP)
 		TArray<TSubclassOf<UGOAPAction>> actions;
 
+
 	// Maximum algorithm depth.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GOAP)
 		int maxDepth = 100;
+
+	//Debug info
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GOAP)
+		bool debug;
+
+	//Include controller's name
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = GOAP)
+		bool controller;
+	
+
 
 private:
 
@@ -99,4 +113,7 @@ public:
 	// Returns the desired world state atoms.
 	UFUNCTION(BlueprintCallable, Category = GOAPController)
 		TArray<FAtom> getDesiredWorldStateAtoms();
+
+private:
+	void debugInfo();
 };
