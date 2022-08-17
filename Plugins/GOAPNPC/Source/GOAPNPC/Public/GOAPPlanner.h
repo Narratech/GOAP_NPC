@@ -1,14 +1,9 @@
 /**
-	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters.
+	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters
+	Copyright © 2022 Narratech Laboratories
 
-	Publishers/Authors:
-		-	Diego Romero-Hombrebueno Santos.
-		-	Mario Sanchez Blanco.
-		-	Jose Manuel Sierra Ramos.
-
-	Published on 2020.
-
-	Updated by Daniel Gil Aguilar on 2022
+	Authors: Diego Romero-Hombrebueno Santos, Mario Sánchez Blanco, José Manuel Sierra Ramos, Daniel Gil Aguilar and Federico Peinado
+	Website: https://narratech.com/project/goap-npc/
  */
 #pragma once
 
@@ -17,10 +12,9 @@
 #include "GOAPAction.h"
 #include "CoreMinimal.h"
 
-
  /**
-  * Uses A* pathfinding algorithm to generate the cheapest actions plan.
-  * Nodes are represented by the possible states of the world and edges are represented by actions.
+  * The planner uses A* algorithm, classic pathfinding method, to generate the cheapest plan (sequence of actions).
+  * Nodes represent possible states of the world and edges represent actions used as transitions between those states.
   */
 class GOAPNPC_API GOAPPlanner
 {
@@ -49,13 +43,14 @@ public:
 
 	GOAPPlanner(GOAPWorldState* c, GOAPWorldState* g, const TArray<UGOAPAction*>& a);
 
-	// Get the node with lowest F's value. F = G + H.
+	// Get the node with lowest F's value. 
+	// F = G (real cost at this state) + H (estimated cost from this state).
 	GOAPNode lowestFinList(const TArray<GOAPNode>& opList);
 
 	// Returns the nodes adjacent to the current one.
 	TArray<GOAPNode> getAdjacent(GOAPNode current, const TArray<UGOAPAction*>& vActions, APawn* p);
 
-	// A* pathfinding algorithm.
+	// A* algorithm.
 	TArray<UGOAPAction*> generatePlan(APawn* p);
 
 	void addAction(UGOAPAction* a);

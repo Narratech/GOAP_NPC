@@ -1,14 +1,9 @@
 /**
-	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters.
+	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters
+	Copyright © 2022 Narratech Laboratories
 
-	Publishers/Authors:
-		-	Diego Romero-Hombrebueno Santos.
-		-	Mario Sanchez Blanco.
-		-	Jose Manuel Sierra Ramos.
-
-	Published on 2020.
-
-	Updated by Daniel Gil Aguilar on 2022
+	Authors: Diego Romero-Hombrebueno Santos, Mario Sánchez Blanco, José Manuel Sierra Ramos, Daniel Gil Aguilar and Federico Peinado
+	Website: https://narratech.com/project/goap-npc/
  */
 #pragma once
 
@@ -16,7 +11,7 @@
 #include "CoreMinimal.h"
 
  /**
-  * Node used in A* pathfinding algorithm. Represents a possible state of the world.
+  * Node used in A* algorithm. Represents a possible state of the world.
   */
 class GOAPNPC_API GOAPNode
 {

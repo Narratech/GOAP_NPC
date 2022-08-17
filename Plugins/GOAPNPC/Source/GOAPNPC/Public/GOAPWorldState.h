@@ -1,14 +1,9 @@
 /**
-	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters.
+	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters
+	Copyright © 2022 Narratech Laboratories
 
-	Publishers/Authors:
-		-	Diego Romero-Hombrebueno Santos.
-		-	Mario Sanchez Blanco.
-		-	Jose Manuel Sierra Ramos.
-
-	Published on 2020.
-
-	Updated by Daniel Gil Aguilar on 2022
+	Authors: Diego Romero-Hombrebueno Santos, Mario Sánchez Blanco, José Manuel Sierra Ramos, Daniel Gil Aguilar and Federico Peinado
+	Website: https://narratech.com/project/goap-npc/
  */
 #pragma once
 
@@ -16,8 +11,8 @@
 #include "CoreMinimal.h"
 
  /**
-  * WorldState is made up of atoms that define the state of a world.
-  *
+  * The state of the world (the 'logic world' for reasoning with GOAP) is made up of atoms. 
+  * An atom is a predicate (a simple string) and a boolean as its truth value.  *
   */
 class GOAPNPC_API GOAPWorldState
 {
@@ -45,7 +40,7 @@ public:
 
 	void cleanAtoms();
 
-	// Mixes two WorldState.
+	// Mixes two states of the world
 	void joinWorldState(GOAPWorldState w);
 
 	bool isEmpty();

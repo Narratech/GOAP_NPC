@@ -1,14 +1,9 @@
 /**
-	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters.
+	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters
+	Copyright © 2022 Narratech Laboratories
 
-	Publishers/Authors:
-		-	Diego Romero-Hombrebueno Santos.
-		-	Mario Sanchez Blanco.
-		-	Jose Manuel Sierra Ramos.
-
-	Published on 2020.
-
-	Updated by Daniel Gil Aguilar on 2022
+	Authors: Diego Romero-Hombrebueno Santos, Mario Sánchez Blanco, José Manuel Sierra Ramos, Daniel Gil Aguilar and Federico Peinado
+	Website: https://narratech.com/project/goap-npc/
  */
 #include "GOAPAction.h"
 
@@ -32,6 +27,7 @@ void UGOAPAction::create_P_E()
 TArray<AActor*> UGOAPAction::getTargetsList(APawn* p)
 {
 	TArray<AActor*> actorsFound;
+	// AVOID CRASHES, checking if targetsType is empty or not!
 	UGameplayStatics::GetAllActorsOfClass(p->GetWorld(), targetsType, actorsFound);
 	return actorsFound;
 }

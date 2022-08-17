@@ -1,14 +1,9 @@
 /**
-	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters.
+	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters
+	Copyright © 2022 Narratech Laboratories
 
-	Publishers/Authors:
-		-	Diego Romero-Hombrebueno Santos.
-		-	Mario Sanchez Blanco.
-		-	Jose Manuel Sierra Ramos.
-
-	Published on 2020.
-
-	Updated by Daniel Gil Aguilar on 2022
+	Authors: Diego Romero-Hombrebueno Santos, Mario Sánchez Blanco, José Manuel Sierra Ramos, Daniel Gil Aguilar and Federico Peinado
+	Website: https://narratech.com/project/goap-npc/
  */
 #include "GOAPController.h"
 
@@ -51,7 +46,7 @@ void AGOAPController::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("Undefined Current World in GOAPController."));
 
 	if (wsDesiredWorld.isEmpty())
-		UE_LOG(LogTemp, Warning, TEXT("Undefined Desired World in GOAPController."));
+		UE_LOG(LogTemp, Warning, TEXT("Undefined Desired World in GOAPController.")); // This is normal in the first execution, isn´t it?
 
 	Super::BeginPlay();
 }

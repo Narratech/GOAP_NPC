@@ -1,14 +1,9 @@
 /**
-	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters.
+	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters
+	Copyright © 2022 Narratech Laboratories
 
-	Publishers/Authors:
-		-	Diego Romero-Hombrebueno Santos.
-		-	Mario Sanchez Blanco.
-		-	Jose Manuel Sierra Ramos.
-
-	Published on 2020.
-
-	Updated by Daniel Gil Aguilar on 2022
+	Authors: Diego Romero-Hombrebueno Santos, Mario Sánchez Blanco, José Manuel Sierra Ramos, Daniel Gil Aguilar and Federico Peinado
+	Website: https://narratech.com/project/goap-npc/
  */
 #pragma once
 
@@ -27,11 +22,11 @@ struct FAtom
 {
 	GENERATED_USTRUCT_BODY()
 
-		// Name of the atom.
+		// Name of the atom (predicate).
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Atom)
 		FString name;
 
-	// Value of the atom.
+	// Value of the atom (truth value).
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Atom)
 		bool value;
 
@@ -59,11 +54,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Properties)
 		TSubclassOf<AActor> targetsType;
 
-	// Conditions needed to perform the action.
+	// Preconditions or requirements needed to perform the action.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WorldState)
 		TArray<FAtom> preconditions;
 
-	// Effects caused by the action.
+	// Effects or postconditions caused by the action.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = WorldState)
 		TArray<FAtom> effects;
 

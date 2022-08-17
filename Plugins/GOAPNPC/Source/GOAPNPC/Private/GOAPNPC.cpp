@@ -1,4 +1,10 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+/**
+	GOAP NPC: Goal-Oriented Action Planning for Non-Player Characters
+	Copyright © 2022 Narratech Laboratories
+
+	Authors: Diego Romero-Hombrebueno Santos, Mario Sánchez Blanco, José Manuel Sierra Ramos, Daniel Gil Aguilar and Federico Peinado
+	Website: https://narratech.com/project/goap-npc/
+ */
 
 #include "GOAPNPC.h"
 
@@ -11,8 +17,8 @@ void FGOAPNPCModule::StartupModule()
 
 void FGOAPNPCModule::ShutdownModule()
 {
-	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
-	// we call this function before unloading the module.
+	// This function may be called during shutdown to clean up your module.  
+	// For modules that support dynamic reloading, we call this function before unloading the module.
 }
 
 #undef LOCTEXT_NAMESPACE
