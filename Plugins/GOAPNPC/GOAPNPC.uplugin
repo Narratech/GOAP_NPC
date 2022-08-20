@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
-	"Version": 1,
-	"VersionName": "1.5",
+	"Version": 2,
+	"VersionName": "2.1",
 	"FriendlyName": "GOAP NPC",
 	"Description": "Goal-Oriented Action Planning for Non-Player Characters",
 	"Category": "AI",
