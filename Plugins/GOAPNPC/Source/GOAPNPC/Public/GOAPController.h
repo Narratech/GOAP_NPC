@@ -10,8 +10,8 @@
 #include "GOAPPlanner.h"
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "GOAPController.generated.h"
 #include "Engine.h" // To avoid GOAPController.cpp(93): error C2065: 'GEngine': undeclared identifier
+#include "GOAPController.generated.h"
 
 
  /**
