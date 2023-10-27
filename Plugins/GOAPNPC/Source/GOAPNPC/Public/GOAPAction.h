@@ -12,25 +12,54 @@
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/NoExportTypes.h"
+
+#include "GameplayTags.h"
+
 #include "GOAPAction.generated.h"
 
  /**
  * Auxiliary struct to get WorldState's atoms from Blueprints' description.
  */
-USTRUCT(BlueprintType, Blueprintable)
-struct FAtom
+USTRUCT(BlueprintType)
+struct GOAPNPC_API FAtom
 {
 	GENERATED_USTRUCT_BODY()
 
-		// Name of the atom (predicate).
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Atom)
-		FString name;
+	FAtom() = default;
+
+	FAtom(FGameplayTag _tag, bool _value)
+		: tag(_tag)
+		, value(_value)
+	{}
+
+#if WITH_EDITORONLY_DATA
+		// DEPRECATED: Name of the atom (predicate).
+		UPROPERTY(meta = (DeprecatedProperty, DeprecationMessage = "Use gameplay tag instead."))
+		FString name_DEPRECATED;
+
+	void PostSerialize(const FArchive& Ar);
+#endif
+
+	// Name of the atom (predicate).
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (Category = "Atom"))
+	FGameplayTag tag;
 
 	// Value of the atom (truth value).
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Atom)
-		bool value;
+		bool value = false;
 
 };
+
+#if WITH_EDITORONLY_DATA
+template<>
+struct TStructOpsTypeTraits<FAtom> : public TStructOpsTypeTraitsBase2<FAtom>
+{
+	enum
+	{
+		WithPostSerialize = true
+	};
+};
+#endif
 
 /**
  * GOAPAction class contains every attribute and function needed to define an action.
@@ -65,19 +94,16 @@ public:
 
 private:
 
-	AActor* target;
+	AActor* target = nullptr;
 
 	GOAPWorldState wsPreconditions;
 
 	GOAPWorldState wsEffects;
 
 public:
-
-	UGOAPAction();
-
 	// Search all actors of targetsType class located in the world.
 	UFUNCTION(BlueprintCallable, Category = GOAPAction)
-		TArray<AActor*> getTargetsList(APawn* p);
+		TArray<AActor*> getTargetsList(APawn* p) const;
 
 	// Optional function to check if it's possible to perform the action.
 	UFUNCTION(BlueprintImplementableEvent, Category = GOAPAction)
@@ -92,23 +118,23 @@ public:
 
 	// COMPARATORS
 
-	bool operator==(UGOAPAction& action);
+	bool operator==(const UGOAPAction& action) const;
 
-	bool operator!=(UGOAPAction& action);
+	bool operator!=(const UGOAPAction& action) const;
 
 	// GETS
 
-	FString getName();
+	FString getName() const;
 
-	float getCost();
+	float getCost() const;
 
 	// Gets the chosen target from targetList or the one specific in setTarget().
 	UFUNCTION(BlueprintCallable, Category = GOAPAction)
-		AActor* getTarget();
+		AActor* getTarget() const;
 
-	GOAPWorldState getPreconditions();
+	const GOAPWorldState& getPreconditions() const;
 
-	GOAPWorldState getEffects();
+	const GOAPWorldState& getEffects() const;
 
 	// SETS
 

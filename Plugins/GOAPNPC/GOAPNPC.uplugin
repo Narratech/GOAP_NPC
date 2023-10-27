@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 2,
-	"VersionName": "2.1",
+	"VersionName": "2.2",
 	"FriendlyName": "GOAP NPC",
 	"Description": "Goal-Oriented Action Planning for Non-Player Characters",
 	"Category": "AI",
@@ -22,6 +22,12 @@
 			"WhitelistPlatforms": [
 				"Win64"
 			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "GameplayTagsEditor",
+			"Enabled": true
 		}
 	]
 }

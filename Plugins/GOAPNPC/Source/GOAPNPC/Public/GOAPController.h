@@ -104,11 +104,11 @@ public:
 
 	// Returns the current world state atoms.
 	UFUNCTION(BlueprintCallable, Category = GOAPController)
-		TArray<FAtom> getCurrentWorldStateAtoms();
+		TArray<FAtom> getCurrentWorldStateAtoms() const;
 
 	// Returns the desired world state atoms.
 	UFUNCTION(BlueprintCallable, Category = GOAPController)
-		TArray<FAtom> getDesiredWorldStateAtoms();
+		TArray<FAtom> getDesiredWorldStateAtoms() const;
 
 private:
 	void debugInfo();

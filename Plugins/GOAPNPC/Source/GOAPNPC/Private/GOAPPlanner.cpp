@@ -18,16 +18,16 @@ GOAPPlanner::GOAPPlanner(GOAPWorldState* c, GOAPWorldState* g, const TArray<UGOA
 	actions = a;
 }
 
-GOAPNode GOAPPlanner::lowestFinList(const TArray<GOAPNode>& opList)
+const GOAPNode* GOAPPlanner::lowestFinList(const TArray<GOAPNode>& opList) const
 {
-	GOAPNode node;
+	const GOAPNode* node = nullptr;
 
 	float minF = MAX_FLT;
-	for (GOAPNode n : opList)
+	for (const GOAPNode& n : opList)
 	{
 		if ((n.getF()) < minF)
 		{
-			node = n;
+			node = &n;
 			minF = n.getF();
 		}
 	}
@@ -35,10 +35,10 @@ GOAPNode GOAPPlanner::lowestFinList(const TArray<GOAPNode>& opList)
 	return node;
 }
 
-bool containsNode(GOAPNode node, const TArray<GOAPNode>& list)
+bool containsNode(const GOAPNode& node, const TArray<GOAPNode>& list)
 {
 	bool contains = false;
-	for (GOAPNode n : list)
+	for (const GOAPNode& n : list)
 	{
 		if (n == node)
 		{
@@ -80,7 +80,10 @@ TArray<UGOAPAction*> GOAPPlanner::generatePlan(APawn* p)
 {
 	TArray<UGOAPAction*> sol;
 
-	GOAPNode start; start.setWorld(*currentWorld); start.setParent(-1);
+	GOAPNode start;
+	start.setWorld(*currentWorld);
+	start.setParent(-1);
+
 	GOAPNode last;
 	openList.Empty();
 	closedList.Empty();
@@ -91,7 +94,7 @@ TArray<UGOAPAction*> GOAPPlanner::generatePlan(APawn* p)
 	// Search and create the cheapest path between actions having into account their preconditions, effects and cost.
 	while (continues)
 	{
-		GOAPNode current = lowestFinList(openList);
+		GOAPNode current = *lowestFinList(openList);
 		openList.Remove(current);
 		closedList.Push(current);
 		int pos = closedList.Num() - 1;

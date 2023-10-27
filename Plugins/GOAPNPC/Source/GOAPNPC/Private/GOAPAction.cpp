@@ -7,24 +7,55 @@
  */
 #include "GOAPAction.h"
 
+#if WITH_EDITORONLY_DATA
+#include "GameplayTagsEditorModule.h"
 
-UGOAPAction::UGOAPAction() {}
+void FAtom::PostSerialize(const FArchive& Ar)
+{
+	if (Ar.IsLoading() && !name_DEPRECATED.IsEmpty())
+	{
+		FString tagName = TEXT("GOAP.") + name_DEPRECATED;
+		tag = UGameplayTagsManager::Get().RequestGameplayTag(FName(tagName), false);
+		if (!tag.IsValid())
+		{
+			IGameplayTagsEditorModule& tagsEditor = IGameplayTagsEditorModule::Get();
+			bool result = tagsEditor.AddNewGameplayTagToINI(tagName);
+
+			tag = UGameplayTagsManager::Get().RequestGameplayTag(FName(tagName));
+			if (tag.IsValid())
+			{
+				name_DEPRECATED = "";
+			}
+			else
+			{
+				UE_LOG(LogTemp, Fatal, TEXT("Can't get Gameplay tag for (%s)"), *tagName);
+			}
+		}
+	}
+
+}
+#endif // WITH_EDITORONLY_DATA
+
 
 void UGOAPAction::create_P_E()
 {
-	for (FAtom itP : preconditions)
+	for (FAtom& itP : preconditions)
 	{
-		wsPreconditions.addAtom(itP.name, itP.value);
+		wsPreconditions.addAtom(itP.tag, itP.value);
 	}
-	for (FAtom itE : effects)
+
+	for (FAtom& itE : effects)
 	{
-		wsEffects.addAtom(itE.name, itE.value);
+		wsEffects.addAtom(itE.tag, itE.value);
 	}
-	if (targetsType == NULL)
+
+	if (targetsType == nullptr)
+	{
 		UE_LOG(LogTemp, Warning, TEXT("Targets' type of '%s' action are not defined."), *name);
+	}
 }
 
-TArray<AActor*> UGOAPAction::getTargetsList(APawn* p)
+TArray<AActor*> UGOAPAction::getTargetsList(APawn* p) const
 {
 	TArray<AActor*> actorsFound;
 	// AVOID CRASHES, checking if targetsType is empty or not!
@@ -32,39 +63,39 @@ TArray<AActor*> UGOAPAction::getTargetsList(APawn* p)
 	return actorsFound;
 }
 
-bool UGOAPAction::operator==(UGOAPAction& a)
+bool UGOAPAction::operator==(const UGOAPAction& a) const
 {
 	return this->cost == a.getCost() && target == a.getTarget() && wsPreconditions == a.getPreconditions() && wsEffects == a.getEffects();
 }
 
-bool UGOAPAction::operator!=(UGOAPAction& a)
+bool UGOAPAction::operator!=(const UGOAPAction& a) const
 {
 	return !(*this == a);
 }
 
 // GETS
 
-FString UGOAPAction::getName()
+FString UGOAPAction::getName() const
 {
-	return this->name;
+	return name;
 }
 
-float UGOAPAction::getCost()
+float UGOAPAction::getCost() const
 {
-	return this->cost;
+	return cost;
 }
 
-AActor* UGOAPAction::getTarget()
+AActor* UGOAPAction::getTarget() const
 {
 	return target;
 }
 
-GOAPWorldState UGOAPAction::getPreconditions()
+const GOAPWorldState& UGOAPAction::getPreconditions() const
 {
 	return wsPreconditions;
 }
 
-GOAPWorldState UGOAPAction::getEffects()
+const GOAPWorldState& UGOAPAction::getEffects() const
 {
 	return wsEffects;
 }
@@ -73,7 +104,7 @@ GOAPWorldState UGOAPAction::getEffects()
 
 void UGOAPAction::setName(FString n)
 {
-	this->name = n;
+	name = n;
 }
 
 void UGOAPAction::setCost(float c)

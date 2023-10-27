@@ -7,8 +7,8 @@
  */
 #pragma once
 
-#include <map>
 #include "CoreMinimal.h"
+#include "GameplayTags.h"
 
  /**
   * The state of the world (the 'logic world' for reasoning with GOAP) is made up of atoms. 
@@ -18,7 +18,7 @@ class GOAPNPC_API GOAPWorldState
 {
 private:
 
-	std::map<FString, bool> atoms;
+	TMap<FGameplayTag, bool> atoms;
 
 public:
 
@@ -26,22 +26,22 @@ public:
 
 	~GOAPWorldState();
 
-	GOAPWorldState(const std::map<FString, bool>& atoms);
+	GOAPWorldState(const TMap<FGameplayTag, bool>& atoms);
 
-	bool operator==(GOAPWorldState w);
+	bool operator==(const GOAPWorldState& w) const;
 
-	bool isIncluded(GOAPWorldState w);
+	bool isIncluded(const GOAPWorldState& w) const;
 
-	const std::map<FString, bool>& getAtoms();
+	const TMap<FGameplayTag, bool>& getAtoms() const;
 
-	void setAtoms(const std::map<FString, bool>& atoms);
+	void setAtoms(const TMap<FGameplayTag, bool>& atoms);
 
-	void addAtom(FString name, bool value);
+	void addAtom(FGameplayTag name, bool value);
 
 	void cleanAtoms();
 
 	// Mixes two states of the world
-	void joinWorldState(GOAPWorldState w);
+	void joinWorldState(const GOAPWorldState& w);
 
-	bool isEmpty();
+	bool isEmpty() const;
 };

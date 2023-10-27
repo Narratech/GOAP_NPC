@@ -9,7 +9,6 @@
 
 GOAPNode::GOAPNode()
 {
-	action = NULL;
 	g = 0;
 	h = 0;
 }
@@ -17,43 +16,41 @@ GOAPNode::GOAPNode()
 GOAPNode::GOAPNode(UGOAPAction* a)
 {
 	action = a;
-	if (a != NULL)g = a->getCost();
-	else g = 0;
+	g = a ? a->getCost() : 0;
 	h = 0;
 }
 
-bool GOAPNode::operator==(GOAPNode n)
+bool GOAPNode::operator==(const GOAPNode& n) const
 {
 	return action == n.getAction();
 }
 
-
-GOAPWorldState GOAPNode::getWorld()
+const GOAPWorldState& GOAPNode::getWorld() const
 {
 	return world;
 }
 
-int GOAPNode::getH()
+int GOAPNode::getH() const
 {
 	return h;
 }
 
-float GOAPNode::getG()
+float GOAPNode::getG() const
 {
 	return g;
 }
 
-float GOAPNode::getF()
+float GOAPNode::getF() const
 {
 	return g + h;
 }
 
-int GOAPNode::getParent()
+int GOAPNode::getParent() const
 {
 	return parent;
 }
 
-UGOAPAction* GOAPNode::getAction()
+UGOAPAction* GOAPNode::getAction() const
 {
 	return action;
 }
@@ -72,12 +69,14 @@ void GOAPNode::setH(GOAPWorldState w)
 {
 	for (auto it : world.getAtoms())
 	{
-		auto aux = w.getAtoms().find(it.first);
-		if (aux != w.getAtoms().end())
+		auto* value = w.getAtoms().Find(it.Key);
+		if (value)
 		{
-			if (it.second != aux->second) ++h;
+			if (*value != it.Value)
+				++h;
 		}
-		else ++h;
+		else
+			++h;
 	}
 }
 
