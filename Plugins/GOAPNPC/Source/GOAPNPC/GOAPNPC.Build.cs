@@ -31,6 +31,7 @@ public class GOAPNPC : ModuleRules
 			new string[]
 			{
 				"Core",
+				"GameplayTags",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -47,8 +48,12 @@ public class GOAPNPC : ModuleRules
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
-		
-		
+
+		if (Target.bBuildEditor)
+		{
+			PrivateDependencyModuleNames.Add("GameplayTagsEditor");
+		}
+
 		DynamicallyLoadedModuleNames.AddRange(
 			new string[]
 			{

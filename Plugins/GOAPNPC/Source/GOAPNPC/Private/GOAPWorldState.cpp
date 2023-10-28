@@ -11,24 +11,24 @@ GOAPWorldState::GOAPWorldState() {}
 
 GOAPWorldState::~GOAPWorldState() {}
 
-GOAPWorldState::GOAPWorldState(const std::map<FString, bool>& a)
+GOAPWorldState::GOAPWorldState(const TMap<FGameplayTag, bool>& a)
 {
 	atoms = a;
 }
 
-bool GOAPWorldState::operator==(GOAPWorldState  w)
+bool GOAPWorldState::operator==(const GOAPWorldState& w) const
 {
-	return atoms.size() == w.getAtoms().size() && std::equal(atoms.begin(), atoms.end(), w.getAtoms().begin());
+	return atoms.OrderIndependentCompareEqual(w.getAtoms());
 }
 
-bool GOAPWorldState::isIncluded(GOAPWorldState w)
+bool GOAPWorldState::isIncluded(const GOAPWorldState& w) const
 {
 	for (auto requirement : w.getAtoms())
 	{
-		auto it = atoms.find(requirement.first);
-		if (it != atoms.end())
+		const auto* value = atoms.Find(requirement.Key);
+		if (value)
 		{
-			if (it->second != requirement.second)
+			if (*value != requirement.Value)
 				return false;
 		}
 		else return false;
@@ -37,35 +37,35 @@ bool GOAPWorldState::isIncluded(GOAPWorldState w)
 
 }
 
-const std::map<FString, bool>& GOAPWorldState::getAtoms()
+const TMap<FGameplayTag, bool>& GOAPWorldState::getAtoms() const
 {
 	return atoms;
 }
 
-void GOAPWorldState::setAtoms(const std::map<FString, bool>& a)
+void GOAPWorldState::setAtoms(const TMap<FGameplayTag, bool>& a)
 {
 	atoms = a;
 }
 
-void GOAPWorldState::addAtom(FString name, bool value)
+void GOAPWorldState::addAtom(FGameplayTag name, bool value)
 {
-	atoms[name] = value;
+	atoms.Add(name, value);
 }
 
 void GOAPWorldState::cleanAtoms()
 {
-	atoms.clear();
+	atoms.Empty();
 }
 
-void GOAPWorldState::joinWorldState(GOAPWorldState w)
+void GOAPWorldState::joinWorldState(const GOAPWorldState& w)
 {
 	for (auto atom : w.getAtoms())
 	{
-		atoms[atom.first] = atom.second;
+		atoms.Add(atom.Key, atom.Value);
 	}
 }
 
-bool GOAPWorldState::isEmpty()
+bool GOAPWorldState::isEmpty() const
 {
-	return atoms.size() == 0;
+	return atoms.Num() == 0;
 }

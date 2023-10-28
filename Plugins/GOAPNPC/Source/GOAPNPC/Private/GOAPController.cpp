@@ -24,11 +24,11 @@ void AGOAPController::BeginPlay()
 
 	// Loads Current World.
 	for (FAtom atom : currentWorld)
-		wsCurrentWorld.addAtom(atom.name, atom.value);
+		wsCurrentWorld.addAtom(atom.tag, atom.value);
 
 	// Loads Desired World.
 	for (FAtom atom : desiredWorld)
-		wsDesiredWorld.addAtom(atom.name, atom.value);
+		wsDesiredWorld.addAtom(atom.tag, atom.value);
 
 	// Loads actions' preconditions and effects.
 	for (UGOAPAction* a : auxActions)
@@ -112,7 +112,7 @@ void AGOAPController::setGoal(const TArray<FAtom>& newGoal)
 void AGOAPController::updateGoal(const TArray<FAtom>& atoms)
 {
 	for (FAtom atom : atoms)
-		wsDesiredWorld.addAtom(atom.name, atom.value);
+		wsDesiredWorld.addAtom(atom.tag, atom.value);
 }
 
 void AGOAPController::setCurrentWorld(const TArray<FAtom>& newCurrentWorld)
@@ -124,26 +124,26 @@ void AGOAPController::setCurrentWorld(const TArray<FAtom>& newCurrentWorld)
 void AGOAPController::updateCurrentWorld(const TArray<FAtom>& atoms)
 {
 	for (FAtom atom : atoms)
-		wsCurrentWorld.addAtom(atom.name, atom.value);
+		wsCurrentWorld.addAtom(atom.tag, atom.value);
 }
 
-TArray<FAtom> AGOAPController::getCurrentWorldStateAtoms()
+TArray<FAtom> AGOAPController::getCurrentWorldStateAtoms() const
 {
 	TArray<FAtom> worldStateAtoms;
-	for (auto atoms : wsCurrentWorld.getAtoms())
+	for (auto atom : wsCurrentWorld.getAtoms())
 	{
-		worldStateAtoms.Add({ atoms.first, atoms.second });
+		worldStateAtoms.Add({ atom.Key, atom.Value });
 	}
 
 	return worldStateAtoms;
 }
 
-TArray<FAtom> AGOAPController::getDesiredWorldStateAtoms()
+TArray<FAtom> AGOAPController::getDesiredWorldStateAtoms() const
 {
 	TArray<FAtom> worldStateAtoms;
-	for (auto atoms : wsDesiredWorld.getAtoms())
+	for (auto atom : wsDesiredWorld.getAtoms())
 	{
-		worldStateAtoms.Add({ atoms.first, atoms.second });
+		worldStateAtoms.Add({ atom.Key, atom.Value });
 	}
 
 	return worldStateAtoms;

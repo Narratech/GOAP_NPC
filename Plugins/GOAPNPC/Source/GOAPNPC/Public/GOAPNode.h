@@ -26,7 +26,7 @@ private:
 	int parent;
 
 	// Chosen action to reach this node.
-	UGOAPAction* action;
+	UGOAPAction* action = nullptr;
 
 public:
 	GOAPNode();
@@ -34,21 +34,21 @@ public:
 	GOAPNode(UGOAPAction* a);
 
 	//OPERATORS 
-	bool operator==(GOAPNode n);
+	bool operator==(const GOAPNode& n) const;
 
 	// GETS
 
-	int getH();
+	int getH() const;
 
-	float getG();
+	float getG() const;
 
-	float getF();
+	float getF() const;
 
-	int getParent();
+	int getParent() const;
 
-	GOAPWorldState getWorld();
+	const GOAPWorldState& getWorld() const;
 
-	UGOAPAction* getAction();
+	UGOAPAction* getAction() const;
 
 	// SETS
 

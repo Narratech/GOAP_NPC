@@ -45,7 +45,7 @@ public:
 
 	// Get the node with lowest F's value. 
 	// F = G (real cost at this state) + H (estimated cost from this state).
-	GOAPNode lowestFinList(const TArray<GOAPNode>& opList);
+	const GOAPNode* lowestFinList(const TArray<GOAPNode>& opList) const;
 
 	// Returns the nodes adjacent to the current one.
 	TArray<GOAPNode> getAdjacent(GOAPNode current, const TArray<UGOAPAction*>& vActions, APawn* p);
